@@ -126,9 +126,10 @@ def predict():
         result = model.predict(review_scaled)
         sentiment = 'Positive' if result[0] == 1 else 'Negative'
         emoji = '😊' if result[0] == 1 else '😞'
-        return jsonify({'sentiment': sentiment, 'emoji': emoji})
+        document.getElementById('sentiment-text').textContent=data.sentiment+' Review';
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
