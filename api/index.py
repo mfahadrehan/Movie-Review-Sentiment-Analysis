@@ -99,6 +99,7 @@ async function predict(){
   try{
     const res=await fetch('/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({review})});
     const data=await res.json();
+    if(data.error){alert('Server error: '+data.error);return;}
     result.className='result '+(data.sentiment==='Positive'?'positive':'negative');
     result.style.display='flex';
     document.getElementById('emoji').textContent=data.emoji;
