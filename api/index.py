@@ -2,11 +2,14 @@ import pickle as pk
 import os
 from flask import Flask, request, jsonify, render_template
 
-app = Flask(__name__, template_folder='../templates')
+app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'templates'))
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-model = pk.load(open(os.path.join(BASE_DIR, 'model.pkl'), 'rb'))
-scaler = pk.load(open(os.path.join(BASE_DIR, 'scaler.pkl'), 'rb'))
+
+with open(os.path.join(BASE_DIR, 'model.pkl'), 'rb') as f:
+    model = pk.load(f)
+with open(os.path.join(BASE_DIR, 'scaler.pkl'), 'rb') as f:
+    scaler = pk.load(f)
 
 @app.route('/')
 def index():
