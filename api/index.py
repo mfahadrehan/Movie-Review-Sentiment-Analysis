@@ -122,14 +122,13 @@ def predict():
         review = data.get('review', '')
         if not review.strip():
             return jsonify({'error': 'Please enter a review'}), 400
-        review_scaled = scaler.transform([review]).toarray()
-        result = model.predict(review_scaled)
+        review_vectorized = scaler.transform([review])
+        result = model.predict(review_vectorized)
         sentiment = 'Positive' if result[0] == 1 else 'Negative'
         emoji = '😊' if result[0] == 1 else '😞'
-        document.getElementById('sentiment-text').textContent=data.sentiment+' Review';
+        return jsonify({'sentiment': sentiment, 'emoji': emoji})
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)
-    
